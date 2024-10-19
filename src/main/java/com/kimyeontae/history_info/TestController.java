@@ -12,14 +12,14 @@ public class TestController {
 
     @GetMapping("/")
     public String home() {
-        return "index";
+        return "home";
     }
     @PostMapping("/")
     public String home(Model model) {
         TestPost post = new TestPost("안녕하세용", 1 , "서브타이틀", "제목");
         post.setDate();
         model.addAttribute("posts", post);
-        return "index";
+        return "home";
     }
 
     @GetMapping("/about")

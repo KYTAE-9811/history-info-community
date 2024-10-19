@@ -1,5 +1,6 @@
 package com.kimyeontae.history_info.posts;
 
+import com.kimyeontae.history_info.Topic;
 import com.kimyeontae.history_info.comments.Comment;
 import com.kimyeontae.history_info.users.Users;
 import jakarta.persistence.*;
@@ -15,10 +16,15 @@ public class Posts {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
+    private String writer;
+
     @Lob
     private String content;
     private String imageUrl;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Topic topic;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -42,6 +48,20 @@ public class Posts {
     /*
     생성 메서드
      */
+    public void addTopic(Topic topic){
+        this.topic = topic;
+    }
+
+    public void updateWriter(String writer){
+        this.writer = writer;
+    }
+
+    public Posts(String title, String content, String imageUrl) {
+        this.title = title;
+        this.content = content;
+        this.imageUrl = imageUrl;
+    }
+
     public Posts(String title, String content, String imageUrl, String password) {
         this.title = title;
         this.content = content;
