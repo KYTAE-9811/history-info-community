@@ -1,9 +1,8 @@
 package com.kimyeontae.history_info.posts.service;
 
 import com.kimyeontae.history_info.posts.Posts;
-import com.kimyeontae.history_info.posts.controller.PostRepository;
+import com.kimyeontae.history_info.posts.repository.PostRepository;
 import com.kimyeontae.history_info.posts.dto.PostResponse;
-import jakarta.annotation.security.RunAs;
 import jakarta.transaction.Transactional;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -12,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -99,5 +96,11 @@ class PostServiceTest {
         Long postId = postService.addPost(posts);
         Posts newPosts = new Posts("훗", "후후훗","/image/new", "2");
         Long postId2 = postService.addPost(newPosts);
+
+        //when
+        PostResponse result = postService.getPost(postId);
+
+        //then
+        System.out.println(result.toString());
     }
 }

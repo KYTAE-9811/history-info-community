@@ -1,4 +1,4 @@
-package com.kimyeontae.history_info.comments.controller;
+package com.kimyeontae.history_info.comments.repository;
 
 import com.kimyeontae.history_info.comments.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;

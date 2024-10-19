@@ -1,12 +1,10 @@
 package com.kimyeontae.history_info.posts.service;
 
 import com.kimyeontae.history_info.posts.Posts;
-import com.kimyeontae.history_info.posts.controller.PostRepository;
-import com.kimyeontae.history_info.posts.dto.PostRequest;
+import com.kimyeontae.history_info.posts.repository.PostRepository;
 import com.kimyeontae.history_info.posts.dto.PostResponse;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

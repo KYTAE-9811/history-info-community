@@ -5,19 +5,23 @@ import com.kimyeontae.history_info.posts.Posts;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 public class PostResponse {
-    private String id;
+
     private String title;
     private String content;
     private String imageUrl;
+
     private Integer like;
     private Integer dislike;
     private Integer view;
-    private List<Comment> comments;
+    private Integer commentsCount;
+
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public PostResponse creatPostResponse(Posts posts) {
         this.content = posts.getContent();
@@ -26,7 +30,9 @@ public class PostResponse {
         this.like = posts.getLikes();
         this.view = posts.getViews();
         this.title = posts.getTitle();
-        this.comments = posts.getComments();
+        this.createdAt = posts.getCreatedAt();
+        this.updatedAt = posts.getUpdatedAt();
+        this.commentsCount = posts.getCommentsCount();
         return this;
     }
 }

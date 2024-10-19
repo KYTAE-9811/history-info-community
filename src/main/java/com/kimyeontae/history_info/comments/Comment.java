@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String content;
     private String password;
 
@@ -36,6 +36,11 @@ public class Comment {
     public Comment createComment(String content){
         this.createdAt = LocalDateTime.now();
         this.content = content;
+        return this;
+    }
+    public Comment updateComment(String content){
+        this.content = content;
+        this.updatedAt = LocalDateTime.now();
         return this;
     }
 }

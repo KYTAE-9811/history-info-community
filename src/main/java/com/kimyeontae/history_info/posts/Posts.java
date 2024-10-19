@@ -47,6 +47,10 @@ public class Posts {
         this.content = content;
         this.imageUrl = imageUrl;
         this.password = password;
+        this.likes = 0;
+        this.dislikes = 0;
+        this.commentsCount = 0;
+        this.views = 0;
         this.createdAt = LocalDateTime.now();
     }
 
