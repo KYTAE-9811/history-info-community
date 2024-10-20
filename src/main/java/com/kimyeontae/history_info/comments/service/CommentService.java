@@ -4,6 +4,7 @@ import com.kimyeontae.history_info.comments.Comment;
 import com.kimyeontae.history_info.comments.repository.CommentRepository;
 import com.kimyeontae.history_info.comments.dto.CommentResponse;
 import com.kimyeontae.history_info.posts.Posts;
+import com.kimyeontae.history_info.posts.repository.PostRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,14 +17,17 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class CommentService {
+    private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 
     /*
-    1. 댓글 등록
+    1. 해당 포스트에 댓글 등록
     */
-    public Long addComment(Comment comment) {
+    public void addComment(Long postId, Comment comment) {
+        Posts post = postRepository.findById(postId).orElseThrow(EntityNotFoundException::new);
+        post.addComment(comment);
+        comment.setPost(post);
         commentRepository.save(comment);
-        return comment.getId();
     }
     /*
     2. 댓글 수정
@@ -48,10 +52,11 @@ public class CommentService {
     }
 
     /*
-    4. 게시글 전체 조회
+    4. 해당 포스트 댓글 전체 조회
      */
-    public List<CommentResponse> getAllPost() {
-        List<Comment> comments = commentRepository.findAll();
+    public List<CommentResponse> getAllComments(Long postId) {
+        Posts post = postRepository.findById(postId).orElseThrow((() -> new EntityNotFoundException("없습니다")));
+        List<Comment> comments = post.getComments();
         List<CommentResponse> CommentResponses = new ArrayList<>();
         for (Comment comment : comments) {
             CommentResponses.add(new CommentResponse().createCommentResponse(comment));

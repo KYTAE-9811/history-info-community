@@ -31,8 +31,21 @@ public class Comment {
     private Posts post;
 
     /*
-    생성 메서드
-    */
+    연관관계 메서드
+     */
+
+    public void setPost(Posts post) {
+        this.post = post;
+    }
+
+    /*
+        생성 메서드
+        */
+    public Comment(String content) {
+        this.content = content;
+        this.createdAt = LocalDateTime.now();
+    }
+
     public Comment createComment(String content){
         this.createdAt = LocalDateTime.now();
         this.content = content;

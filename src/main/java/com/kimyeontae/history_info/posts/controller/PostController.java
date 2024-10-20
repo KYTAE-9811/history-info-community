@@ -1,6 +1,8 @@
 package com.kimyeontae.history_info.posts.controller;
 
 import com.kimyeontae.history_info.Topic;
+import com.kimyeontae.history_info.comments.dto.CommentResponse;
+import com.kimyeontae.history_info.comments.service.CommentService;
 import com.kimyeontae.history_info.posts.Posts;
 import com.kimyeontae.history_info.posts.dto.PostRequest;
 import com.kimyeontae.history_info.posts.dto.PostResponse;
@@ -21,6 +23,7 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
+    private final CommentService commentService;
 
     // 게시글 전체 목록 조회 (완)
     @GetMapping
@@ -32,6 +35,7 @@ public class PostController {
     }
 
     // 게시글 상세보기 (완)
+    // 댓글 전체 보여주는 기능
     // 댓글 작성기능
     @GetMapping("/posts/{postId}")
     public String PostDetail(Model model,
@@ -41,6 +45,12 @@ public class PostController {
         PostResponse postResponse = postService.getPost(postId);
         model.addAttribute("topic", topic);
         model.addAttribute("post", postResponse);
+        // 게시글 자체 내용을 넘김
+
+        List<CommentResponse> comments = commentService.getAllComments(postId);
+        model.addAttribute("comments", comments);
+        // 포스트 아이디로 가져온 해당 게시글의 댓글들을 모델로 넘김
+
         return "post_detail";
     }
 
