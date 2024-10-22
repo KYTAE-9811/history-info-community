@@ -1,51 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="login.css">
+  <link th:href="@{/assets/css/login.css}" rel="stylesheet">
 </head>
-<h2>Weekly Coding Challenge #1: Sign in/up Form</h2>
+<body>
+<h2>로그인</h2>
 <div class="container" id="container">
-    <div class="form-container sign-up-container">
-        <form action="#">
-            <h1>Create Account</h1>
-            <div class="social-container">
-                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <span>or use your email for registration</span>
-            <input type="text" placeholder="Name" />
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <button>Sign Up</button>
-        </form>
+  <!-- Sign-up Form -->
+  <div class="form-container sign-up-container">
+    <form th:action="@{/register}" method="post">
+      <h1>계정 만들기</h1>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <span th:text="'이메일을 사용하여 회원가입하세요'">이메일을 사용하여 회원가입하세요</span>
+      <input type="text" th:placeholder="'아이디'" name="username" required />
+      <input type="email" th:placeholder="'이메일'" name="email" required />
+      <input type="password" th:placeholder="'비밀번호'" name="password" required />
+      <input type="text" th:placeholder="'닉네임'" name="nickname" required />
+      <button type="submit" th:text="'회원가입'">회원가입</button>
+  </div>
+
+  <!-- Sign-in Form -->
+  <div class="form-container sign-in-container">
+    <form th:action="@{/login}" method="post">
+      <h1>로그인</h1>
+      <div class="social-container">
+        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <span>계정 정보를 사용하세요</span>
+      <input type="email" placeholder="이메일" name="email" required />
+      <input type="password" placeholder="비밀번호" name="password" required />
+      <a href="#">비밀번호를 잊으셨나요?</a>
+      <button type="submit">로그인</button>
+    </form>
+  </div>
+
+  <!-- Overlay Panels -->
+  <div class="overlay-container">
+    <div class="overlay">
+      <div class="overlay-panel overlay-left">
+        <h1>다시 오신 것을 환영합니다!</h1>
+        <p>계속 연결하려면 개인 정보를 사용하여 로그인해 주세요.</p>
+        <button class="ghost" id="signIn">로그인</button>
+      </div>
+      <div class="overlay-panel overlay-right">
+        <h1>안녕하세요, 친구!</h1>
+        <p>개인 정보를 입력하고 저희와 함께 여정을 시작하세요.</p>
+        <button class="ghost" id="signUp">회원가입</button>
+      </div>
     </div>
-    <div class="form-container sign-in-container">
-        <form action="#">
-            <h1>Sign in</h1>
-            <div class="social-container">
-                <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-            <span>or use your account</span>
-            <input type="email" placeholder="Email" />
-            <input type="password" placeholder="Password" />
-            <a href="#">Forgot your password?</a>
-            <button>Sign In</button>
-        </form>
-    </div>
-    <div class="overlay-container">
-        <div class="overlay">
-            <div class="overlay-panel overlay-left">
-                <h1>Welcome Back!</h1>
-                <p>To keep connected with us please login with your personal info</p>
-                <button class="ghost" id="signIn">Sign In</button>
-            </div>
-            <div class="overlay-panel overlay-right">
-                <h1>Hello, Friend!</h1>
-                <p>Enter your personal details and start journey with us</p>
-                <button class="ghost" id="signUp">Sign Up</button>
-            </div>
-        </div>
-    </div>
+  </div>
 </div>
-<script src="login.js"></script>
+<script th:src="@{/assets/js/login.js}"></script>
+</body>
+</html>

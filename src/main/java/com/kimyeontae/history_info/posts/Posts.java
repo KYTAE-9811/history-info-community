@@ -1,10 +1,13 @@
 package com.kimyeontae.history_info.posts;
 
-import com.kimyeontae.history_info.Topic;
 import com.kimyeontae.history_info.comments.Comment;
+import com.kimyeontae.history_info.postTopic.PostTopic;
+import com.kimyeontae.history_info.topic.Topic;
 import com.kimyeontae.history_info.users.Users;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 import java.time.LocalDateTime;
@@ -12,6 +15,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Posts {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -23,8 +27,6 @@ public class Posts {
     private String imageUrl;
     private String password;
 
-    @Enumerated(EnumType.STRING)
-    private Topic topic;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -45,11 +47,14 @@ public class Posts {
     @JoinColumn(name = "user_id")
     private Users user;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "postTopic_id")
+    private PostTopic postTopic;
     /*
     생성 메서드
      */
     public void addTopic(Topic topic){
-        this.topic = topic;
+        this.postTopic = topic.getPostTopic();
     }
 
     public void updateWriter(String writer){
