@@ -11,7 +11,7 @@
   <h1 class="text-center mb-4">게시글 작성</h1>
 
   <!-- 게시글 작성 폼 -->
-  <form th:action="@{/posts/write(topicId=${topicId})}" method="post" th:object="${post}">
+  <form th:action="@{/topic/{topicId}/posts/new(topicId=${topicId})}" method="post" th:object="${post}">
     <!-- 제목 입력 필드 -->
     <div class="form-group">
       <label for="title">제목</label>
@@ -23,9 +23,8 @@
       <label for="content">내용</label>
       <textarea class="form-control" id="content" th:field="*{content}" rows="10" placeholder="내용을 입력하세요" required></textarea>
     </div>
-
     <!-- 작성자 닉네임 전달 (숨김 필드) -->
-    <input type="hidden" th:field="*{writer}"/>
+    <input type="hidden" th:field="${writer}"/>
 
     <!-- 등록 버튼 -->
     <button type="submit" class="btn btn-primary">등록</button>

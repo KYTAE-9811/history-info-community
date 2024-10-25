@@ -3,11 +3,14 @@ package com.kimyeontae.history_info.posts.dto;
 import com.kimyeontae.history_info.comments.Comment;
 import com.kimyeontae.history_info.posts.Posts;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class PostResponse {
 

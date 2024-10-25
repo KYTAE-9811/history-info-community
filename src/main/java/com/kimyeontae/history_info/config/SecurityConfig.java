@@ -18,7 +18,6 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 public class SecurityConfig {
 
@@ -43,8 +42,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/register", "/css/**", "/js/**", "/", "/assets/**", "/images/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/login", "/register", "/css/**", "/js/**", "/", "/assets/**", "/images/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
@@ -57,19 +56,8 @@ public class SecurityConfig {
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/login?logout")
                         .permitAll()
-                )
-                .csrf().disable();
+                );
 
         return http.build();
     }
-
-//    @Bean
-//    public CommandLineRunner setupAdminUser(UserRepository userRepository) {
-//        return args -> {
-//            if (!userRepository.findByUsername("admin9811").isPresent()) {
-//                Users admin = new Users("admin.com", "admin", "1234", Role.ADMIN, "admin9811");userRepository.save(admin);
-//            }
-//        };
-//    }
-
 }

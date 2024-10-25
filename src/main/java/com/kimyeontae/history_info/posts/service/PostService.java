@@ -20,7 +20,6 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
-
     /*
     1. 게시글 등록
     */

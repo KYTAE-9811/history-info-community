@@ -12,21 +12,24 @@
     <!-- Topic Name Header -->
     <h2 class="text-center mb-4">[[${topicName}]] 게시판</h2>
 
-    <!-- Logged-in User's Nickname -->
-    <div class="text-end mb-3">
-        <p>안녕하세요, [[${nickname}]]님!</p>
-    </div>
+    <!-- Logged-in User's Nickname --><!-- 사용자 이름 출력 -->
+    <p>안녕하세요, <span th:text="${#authentication.name}">사용자</span>님!</p>
+<!--    <p th:if="${#authentication.principal != null}">-->
+<!--        안녕하세요, <span th:text="${#authentication.principal.nickname}">사용자</span>님!-->
+<!--    </p>-->
+<!--    <p th:unless="${#authentication.principal != null}">-->
+<!--        안녕하세요, 방문자님! <a th:href="@{/login}">로그인</a>해주세요.-->
+<!--    </p>-->
 
     <!-- Post List -->
     <div class="list-group">
         <div th:each="post : ${posts}">
-            <a th:href="@{'/post/' + ${post.id}}" class="list-group-item list-group-item-action">
+            <a th:href="@{'/post/{id}' + (id = ${post.id})}" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">[[${post.title}]]</h5>
                     <small class="text-muted">작성일: [[${post.createdAt}]]</small>
                 </div>
-                <p class="mb-1">[[${post.excerpt}]]</p>
-                <small class="text-muted">작성자: [[${post.authorName}]]</small>
+                <small class="text-muted">작성자: [[${post.writer}]]</small>
             </a>
         </div>
     </div>

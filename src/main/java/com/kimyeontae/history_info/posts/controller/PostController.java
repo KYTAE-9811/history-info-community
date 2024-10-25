@@ -10,7 +10,9 @@ import com.kimyeontae.history_info.topic.Topic;
 import com.kimyeontae.history_info.topic.TopicService;
 import com.kimyeontae.history_info.users.CustomUserDetail;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,12 +33,11 @@ public class PostController {
     @GetMapping
     public String PostList(Model model, @PathVariable("topicId") Long topicId) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        CustomUserDetail user = (CustomUserDetail) authentication.getPrincipal();
+        System.out.println("Logged in user: " + user.getUsername());
+
         List<PostResponse> postResponses = postService.getAllPost();
-//        if (user != null) {
-//            model.addAttribute("nickname", user.getNickname());
-//        } else {
-//            model.addAttribute("nickname", "게스트");
-//        }
 
         Topic topic = topicService.findTopic(topicId);
         model.addAttribute("topicName", topic.getName());
@@ -69,9 +70,10 @@ public class PostController {
     // 게시글 등록 페이지
     @GetMapping("/posts/new")
     public String PostWrite(Model model,
-                            @PathVariable("topicId") Long topicId) {
+                            @PathVariable("topicId") Long topicId, @AuthenticationPrincipal CustomUserDetail user) {
         model.addAttribute("topicId", topicId);
         model.addAttribute("post", new PostRequest());
+        model.addAttribute("writer", user.getUsername());
         return "post_new";
     }
 
@@ -96,7 +98,7 @@ public class PostController {
 
         model.addAttribute("topicId", topicId);
         model.addAttribute("post", postResponse);
-        return "redirect:/posts/" + post.getId();
+        return String.format("redirect:/topic/%d", topicId);
     }
 
     // 게시글 수정 페이지
