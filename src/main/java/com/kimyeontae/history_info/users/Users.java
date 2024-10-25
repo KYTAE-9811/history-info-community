@@ -4,7 +4,9 @@ import com.kimyeontae.history_info.Role;
 import com.kimyeontae.history_info.comments.Comment;
 import com.kimyeontae.history_info.posts.Posts;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 
 import java.time.LocalDate;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Users {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,5 +52,6 @@ public class Users {
         this.password = password;
         this.role = role;
         this.username = username;
+        this.createdAt = LocalDate.now();
     }
 }

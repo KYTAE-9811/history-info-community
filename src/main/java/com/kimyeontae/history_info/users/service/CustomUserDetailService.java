@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomUserDetailService implements UserDetailsService {
@@ -22,7 +23,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Users findUser = userRepository.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("아이디를 찾을 수 없습니다."));
+        Users findUser = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("아이디를 찾을 수 없습니다."));
 
         return new User(findUser.getUsername(), findUser.getPassword(), getAuthorities(Role.USER));
     }

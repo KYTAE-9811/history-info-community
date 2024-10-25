@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글 상세</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
+<div class="container mt-5">
+    <!-- 게시글 상세 내용 -->
+    <h1 th:text="${post.title}">게시글 제목</h1>
+    <p class="text-muted" th:text="${post.writer}">작성자</p>
+    <p class="text-muted" th:text="${post.date}">작성일</p>
+    <hr>
+    <div class="mb-4" th:text="${post.content}">게시글 내용</div>
 
+    <!-- 댓글 목록 -->
+    <h3>댓글</h3>
+    <div class="list-group mb-4">
+        <div th:each="comment : ${comments}" class="list-group-item">
+            <p class="font-weight-bold mb-1" th:text="${comment.writer}">댓글 작성자</p>
+            <p class="mb-1" th:text="${comment.content}">댓글 내용</p>
+            <small class="text-muted" th:text="${comment.date}">작성일</small>
+        </div>
+    </div>
+
+    <!-- 댓글 작성 폼 -->
+    <h4>댓글 작성</h4>
+    <form th:action="@{/posts/{postId}/comments/add(postId=${post.id})}" method="post">
+        <div class="form-group">
+            <label for="commentContent">내용</label>
+            <textarea class="form-control" id="commentContent" name="content" rows="3" placeholder="댓글을 입력하세요" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">댓글 등록</button>
+    </form>
+</div>
 </body>
 </html>
+

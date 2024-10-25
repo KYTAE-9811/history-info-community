@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/{topicId}")
+@RequestMapping("/topic/{topicId}")
 public class PostController {
 
     private final PostService postService;
@@ -30,11 +30,18 @@ public class PostController {
     // 게시글 전체 목록 조회 (완)
     @GetMapping
     public String PostList(Model model, @PathVariable("topicId") Long topicId) {
+
         List<PostResponse> postResponses = postService.getAllPost();
+//        if (user != null) {
+//            model.addAttribute("nickname", user.getNickname());
+//        } else {
+//            model.addAttribute("nickname", "게스트");
+//        }
 
         Topic topic = topicService.findTopic(topicId);
         model.addAttribute("topicName", topic.getName());
         model.addAttribute("posts", postResponses);
+        model.addAttribute("topicId", topicId);
         return "posts";
     }
 
@@ -43,7 +50,10 @@ public class PostController {
     // 댓글 작성기능
     @GetMapping("/posts/{postId}")
     public String PostDetail(Model model,
-                             @PathVariable("postId") Long postId) {
+                             @PathVariable("postId") Long postId,
+                             @PathVariable("topicId") Long topicId) {
+
+        model.addAttribute("topicId", topicId);
 
         PostResponse postResponse = postService.getPost(postId);
         model.addAttribute("post", postResponse);
@@ -57,14 +67,17 @@ public class PostController {
     }
 
     // 게시글 등록 페이지
-    @GetMapping("/posts/write")
-    public String PostWrite(Model model) {
-        return "post_write";
+    @GetMapping("/posts/new")
+    public String PostWrite(Model model,
+                            @PathVariable("topicId") Long topicId) {
+        model.addAttribute("topicId", topicId);
+        model.addAttribute("post", new PostRequest());
+        return "post_new";
     }
 
     // 게시글 등록
-    @PostMapping("/posts/write")
-    public String PostWrite(Model model, @PathVariable("topicId") Long topicId, PostRequest postRequest, @AuthenticationPrincipal CustomUserDetail user, Writer writer){
+    @PostMapping("/posts/new")
+    public String PostWrite(Model model, @PathVariable("topicId") Long topicId, PostRequest postRequest, @AuthenticationPrincipal CustomUserDetail user){
         // 요청받은 게시글 정보 Post 엔티티에 저장
         Posts post = postRequest.toPosts();
         Topic topic = topicService.findTopic(topicId);
@@ -72,27 +85,35 @@ public class PostController {
         // 요청받은 주제 정보 Post 엔티티에 저장
         post.addTopic(topic);
 
+        // 엔티티를 다시 postResponse DTO로 변환
+        PostResponse postResponse = new PostResponse();
+        postResponse.creatPostResponse(post);
+
         // 작성자 정보 Post 엔티티에 저장
-        post.updateWriter(user.getNickname());
+        postResponse.updateWriter(user.getNickname());
 
         postService.addPost(post);
 
-        model.addAttribute("post", post);
+        model.addAttribute("topicId", topicId);
+        model.addAttribute("post", postResponse);
         return "redirect:/posts/" + post.getId();
     }
 
     // 게시글 수정 페이지
-    @GetMapping("/posts/{postId}/update")
-    public String PostUpdate(Model model, @PathVariable String  topic) {
-        model.addAttribute("topic", topic);
+    @GetMapping("/update")
+    public String PostUpdate(Model model,@PathVariable("topicId") Long topicId) {
+        model.addAttribute("topicId", topicId);
         return "post_update";
     }
 
     // 게시글 수정
-    @PostMapping("/posts/{postId}/update")
-    public String PostUpdate(Model model, @PathVariable String  topic, @PathVariable Long postId, PostRequest postRequest) {
+    @PostMapping("/update")
+    public String PostUpdate(Model model,@PathVariable("topicId") Long topicId, @PathVariable Long postId, PostRequest postRequest, String password) {
+
+        model.addAttribute("topicId", topicId);
         Posts newPost = postRequest.toPosts();
         postService.updatePost(newPost, postId);
+
         return "redirect:/posts/" + postId;
     }
 

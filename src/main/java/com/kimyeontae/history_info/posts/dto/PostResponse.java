@@ -11,9 +11,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PostResponse {
 
+    private Long id;
     private String title;
     private String content;
     private String imageUrl;
+    private String writer;
 
     private Integer like;
     private Integer dislike;
@@ -24,6 +26,7 @@ public class PostResponse {
     private LocalDateTime updatedAt;
 
     public PostResponse creatPostResponse(Posts posts) {
+        this.id = posts.getId();
         this.content = posts.getContent();
         this.dislike = posts.getDislikes();
         this.imageUrl = posts.getImageUrl();
@@ -34,5 +37,8 @@ public class PostResponse {
         this.updatedAt = posts.getUpdatedAt();
         this.commentsCount = posts.getCommentsCount();
         return this;
+    }
+    public void updateWriter(String writer){
+        this.writer = writer;
     }
 }

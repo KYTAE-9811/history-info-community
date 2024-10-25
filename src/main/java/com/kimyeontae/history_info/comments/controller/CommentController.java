@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/{topicId}/posts/{postId}")
+@RequestMapping("/topic/{topicId}/posts/{postId}")
 @RequiredArgsConstructor
 public class CommentController {
 
