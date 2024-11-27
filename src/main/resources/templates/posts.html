@@ -24,7 +24,7 @@
     <!-- Post List -->
     <div class="list-group">
         <div th:each="post : ${posts}">
-            <a th:href="@{'/post/{id}' + (id = ${post.id})}" class="list-group-item list-group-item-action">
+            <a th:href="@{|/topic/${topicId}/posts/${post.id}|}" class="list-group-item list-group-item-action">
                 <div class="d-flex w-100 justify-content-between">
                     <h5 class="mb-1">[[${post.title}]]</h5>
                     <small class="text-muted">작성일: [[${post.createdAt}]]</small>

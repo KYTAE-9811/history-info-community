@@ -1,7 +1,6 @@
 package com.kimyeontae.history_info.posts;
 
 import com.kimyeontae.history_info.comments.Comment;
-import com.kimyeontae.history_info.postTopic.PostTopic;
 import com.kimyeontae.history_info.topic.Topic;
 import com.kimyeontae.history_info.users.Users;
 import jakarta.persistence.*;
@@ -27,7 +26,6 @@ public class Posts {
     private String imageUrl;
     private String password;
 
-
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -47,16 +45,13 @@ public class Posts {
     @JoinColumn(name = "user_id")
     private Users user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "postTopic_id")
-    private PostTopic postTopic;
+    @ManyToOne
+    @JoinColumn(name = "topic_id", nullable = false)
+    private Topic topic;
+
     /*
     생성 메서드
      */
-    public void addTopic(Topic topic){
-        this.postTopic = topic.getPostTopic();
-    }
-
     public void updateWriter(String writer){
         this.writer = writer;
     }
@@ -90,8 +85,11 @@ public class Posts {
     연관관계 편의 메서드
      */
     public Posts addComment(Comment comment) {
+        if (this.commentsCount == null) {
+            this.commentsCount = 0;
+        }
         this.comments.add(comment);
-        commentsCount++;
+        this.commentsCount++;
         return this;
     }
 
@@ -116,6 +114,10 @@ public class Posts {
     public Posts addViews() {
         this.views++;
         return this;
+    }
+
+    public void addTopic(Topic topic) {
+        this.topic = topic;
     }
 
 

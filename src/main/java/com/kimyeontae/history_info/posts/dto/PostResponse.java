@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter 
+@Setter   
 @NoArgsConstructor
 public class PostResponse {
 
@@ -39,6 +39,7 @@ public class PostResponse {
         this.createdAt = posts.getCreatedAt();
         this.updatedAt = posts.getUpdatedAt();
         this.commentsCount = posts.getCommentsCount();
+        this.writer = posts.getWriter();
         return this;
     }
     public void updateWriter(String writer){

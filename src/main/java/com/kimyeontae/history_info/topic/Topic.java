@@ -1,6 +1,4 @@
 package com.kimyeontae.history_info.topic;
-
-import com.kimyeontae.history_info.postTopic.PostTopic;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,16 +14,14 @@ public class Topic {
     private String name;
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "postTopic_id")
-    private PostTopic postTopic;
+
 
     /*
     연관관계 편의 메서드
      */
-    public void setPostTopic(PostTopic postTopic) {
-        this.postTopic = postTopic;
-    }
+//    public void setPostTopic(PostTopic postTopic) {
+//        this.postTopic = postTopic;
+//    }
 
     /*
     생성 메서드

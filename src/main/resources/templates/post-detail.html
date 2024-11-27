@@ -11,7 +11,7 @@
     <!-- 게시글 상세 내용 -->
     <h1 th:text="${post.title}">게시글 제목</h1>
     <p class="text-muted" th:text="${post.writer}">작성자</p>
-    <p class="text-muted" th:text="${post.date}">작성일</p>
+    <p class="text-muted" th:text="${post.createdAt}">작성일</p>
     <hr>
     <div class="mb-4" th:text="${post.content}">게시글 내용</div>
 
@@ -21,13 +21,13 @@
         <div th:each="comment : ${comments}" class="list-group-item">
             <p class="font-weight-bold mb-1" th:text="${comment.writer}">댓글 작성자</p>
             <p class="mb-1" th:text="${comment.content}">댓글 내용</p>
-            <small class="text-muted" th:text="${comment.date}">작성일</small>
+            <small class="text-muted" th:text="${comment.createdAt}">작성일</small>
         </div>
     </div>
 
     <!-- 댓글 작성 폼 -->
     <h4>댓글 작성</h4>
-    <form th:action="@{/posts/{postId}/comments/add(postId=${post.id})}" method="post">
+    <form th:action="@{|/topic/${topicId}/posts/${post.id}/comments/add|}" method="post">
         <div class="form-group">
             <label for="commentContent">내용</label>
             <textarea class="form-control" id="commentContent" name="content" rows="3" placeholder="댓글을 입력하세요" required></textarea>

@@ -14,11 +14,11 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @PostMapping
-    public String addComment(@PathVariable("postId") Long postId,  @ModelAttribute("comment") CommentRequest commentRequest) {
+    @PostMapping("/comments/add")
+    public String addComment(@PathVariable("postId") Long postId, @ModelAttribute("comment") CommentRequest commentRequest) {
         Comment comment = commentRequest.toComment();
         commentService.addComment(postId, comment);
 
-        return "redirect:{topicId}/posts/{postId}";
+        return "redirect:/topic/{topicId}/posts/" + postId;
     }
 }

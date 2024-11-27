@@ -8,9 +8,11 @@ public class PostRequest {
     private String title;
     private String content;
     private String imageUrl;
+    private String password;
 
     public Posts toPosts() {
-        Posts post = new Posts(this.getTitle(), this.getContent(), this.getImageUrl());
+        Posts post = new Posts(this.getTitle(), this.getContent(), this.getImageUrl(), this.getPassword());
+
         return post;
     }
 }

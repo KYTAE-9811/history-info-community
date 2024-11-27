@@ -17,7 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.Writer;
+
 import java.util.List;
 
 @Controller
@@ -32,12 +32,13 @@ public class PostController {
     // 게시글 전체 목록 조회 (완)
     @GetMapping
     public String PostList(Model model, @PathVariable("topicId") Long topicId) {
-
+        // 현재 로그인된 유저 보여줌
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         CustomUserDetail user = (CustomUserDetail) authentication.getPrincipal();
         System.out.println("Logged in user: " + user.getUsername());
 
-        List<PostResponse> postResponses = postService.getAllPost();
+        //특정 토픽에 속한 게시글만 조회하도록 함
+        List<PostResponse> postResponses = postService.getAllPostByTopic(topicId);
 
         Topic topic = topicService.findTopic(topicId);
         model.addAttribute("topicName", topic.getName());
@@ -64,7 +65,7 @@ public class PostController {
         model.addAttribute("comments", comments);
         // 포스트 아이디로 가져온 해당 게시글의 댓글들을 모델로 넘김
 
-        return "post_detail";
+        return "post-detail";
     }
 
     // 게시글 등록 페이지
@@ -82,6 +83,7 @@ public class PostController {
     public String PostWrite(Model model, @PathVariable("topicId") Long topicId, PostRequest postRequest, @AuthenticationPrincipal CustomUserDetail user){
         // 요청받은 게시글 정보 Post 엔티티에 저장
         Posts post = postRequest.toPosts();
+        post.updateWriter(user.getUsername());
         Topic topic = topicService.findTopic(topicId);
 
         // 요청받은 주제 정보 Post 엔티티에 저장
@@ -92,7 +94,6 @@ public class PostController {
         postResponse.creatPostResponse(post);
 
         // 작성자 정보 Post 엔티티에 저장
-        postResponse.updateWriter(user.getNickname());
 
         postService.addPost(post);
 

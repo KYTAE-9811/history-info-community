@@ -46,10 +46,10 @@ public class PostService {
     }
 
     /*
-    4. 게시글 전체 조회
+    4. 토픽 아이디로 게시글 조회
      */
-    public List<PostResponse> getAllPost() {
-        List<Posts> posts = postRepository.findAll();
+    public List<PostResponse> getAllPostByTopic(Long topicId) {
+        List<Posts> posts = postRepository.findByTopicId(topicId);
         List<PostResponse> PostResponses = new ArrayList<>();
         for (Posts post : posts) {
             PostResponses.add(new PostResponse().creatPostResponse(post));
