@@ -1,6 +1,7 @@
 package com.kimyeontae.history_info.posts;
 
 import com.kimyeontae.history_info.comments.Comment;
+import com.kimyeontae.history_info.like.Like;
 import com.kimyeontae.history_info.topic.Topic;
 import com.kimyeontae.history_info.users.Users;
 import jakarta.persistence.*;
@@ -30,16 +31,16 @@ public class Posts {
     private LocalDateTime updatedAt;
 
     private Integer views;
-    private Integer likes;
-    private Integer dislikes;
     private Integer commentsCount;
-
 
     /*
     연관관계 필드
     */
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
+
+    @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -67,8 +68,6 @@ public class Posts {
         this.content = content;
         this.imageUrl = imageUrl;
         this.password = password;
-        this.likes = 0;
-        this.dislikes = 0;
         this.commentsCount = 0;
         this.views = 0;
         this.createdAt = LocalDateTime.now();
@@ -96,15 +95,6 @@ public class Posts {
     /*
     의미있는 수정 메소드
      */
-
-    public Posts addLikes(){
-        this.likes++;
-        return this;
-    }
-    public Posts addDislikes() {
-        this.dislikes++;
-        return this;
-    }
 
     public Posts minusComments_count(){
         this.commentsCount--;

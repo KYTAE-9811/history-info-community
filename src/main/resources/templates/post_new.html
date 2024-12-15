@@ -27,7 +27,11 @@
     <input type="hidden" th:field="${writer}"/>
 
     <!-- 등록 버튼 -->
-    <button type="submit" class="btn btn-primary">등록</button>
+    <div class="d-flex justify-content-between">
+      <button type="submit" class="btn btn-primary">등록</button>
+      </button>
+      <a th:href="@{|/topic/${topicId}|}" class="btn btn-primary">게시글 목록으로 돌아가기</a>
+    </div>
   </form>
 </div>
 </body>

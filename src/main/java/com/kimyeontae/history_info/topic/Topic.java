@@ -14,8 +14,6 @@ public class Topic {
     private String name;
     private String description;
 
-
-
     /*
     연관관계 편의 메서드
      */
