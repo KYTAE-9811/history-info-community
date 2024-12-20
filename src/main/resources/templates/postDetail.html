@@ -14,6 +14,16 @@
     <p class="text-muted" th:text="${post.createdAt}">작성일</p>
     <hr>
     <div class="mb-4" th:text="${post.content}">게시글 내용</div>
+
+    <!-- 게시글 좋아요 -->
+    <form th:action="@{/topic/{topicId}/posts/{postId}/addlike(topicId=${topicId}, postId=${post.id})}" method="post" style="display:inline;">
+        <button type="submit">좋아요</button>
+    </form>
+    <form th:action="@{/topic/{topicId}/posts/{postId}/addlike(topicId=${topicId}, postId=${post.id})}" method="post" style="display:inline;">
+        <button type="submit">좋아요 취소</button>
+    </form>
+    <p>좋아요 개수: <span th:text="${likeCount ?: 0}">0</span></p></div>
+
     <!-- 댓글 목록 -->
     <h3>댓글</h3>
     <div class="list-group mb-4">

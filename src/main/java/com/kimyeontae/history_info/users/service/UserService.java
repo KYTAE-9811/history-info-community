@@ -16,4 +16,8 @@ public class UserService {
     public Long join(Users user) {
         return userRepository.save(user).getId();
     }
+
+    public Long findByUsername(String username) {
+        return userRepository.findByUsername(username).orElseThrow().getId();
+    }
 }

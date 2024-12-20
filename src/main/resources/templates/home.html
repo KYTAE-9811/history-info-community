@@ -42,14 +42,54 @@
 				<p>-Edward Hallett Carr-</p>
 			</header>
 			<section class="tiles">
-				<article class="style1" th:each="topic : ${topics}">
-                            <span class="image">
-                                <img src="images/pic01.jpg" alt="" />
-                            </span>
-					<a th:href="@{/topic/{id}(id=${topic.id})}">
-						<h2 th:text="${topic.name}">Topic Name</h2>
+				<!-- Topic 1 -->
+				<article class="style1">
+				<span class="image">
+					<img src="images/rui14.jpg" alt="Topic 1 Image" />
+				</span>
+					<a th:href="@{/topic/1}">
+						<h2 th:text="${topic1.name}">Topic 1 Name</h2>
 						<div class="content">
-							<p th:text="${topic.description}">Topic Description</p>
+							<p th:text="${topic1.description}">Topic 1 Description</p>
+						</div>
+					</a>
+				</article>
+
+				<!-- Topic 2 -->
+				<article class="style1">
+				<span class="image">
+					<img src="images/empire.png" alt="Topic 2 Image" />
+				</span>
+					<a th:href="@{/topic/2}">
+						<h2 th:text="${topic2.name}">Topic 2 Name</h2>
+						<div class="content">
+							<p th:text="${topic2.description}">Topic 2 Description</p>
+						</div>
+					</a>
+				</article>
+
+				<!-- Topic 3 -->
+				<article class="style1">
+				<span class="image">
+					<img src="images/world1.jpg" alt="Topic 3 Image" />
+				</span>
+					<a th:href="@{/topic/3}">
+						<h2 th:text="${topic3.name}">Topic 3 Name</h2>
+						<div class="content">
+							<p th:text="${topic3.description}">Topic 3 Description</p>
+						</div>
+					</a>
+				</article>
+
+				<!-- Topic 4 -->
+				<article class="style1">
+				<span class="image">
+					<img src="images/world2.jpg" alt="Topic 4 Image" />
+				</span>
+					<a th:href="@{/topic/4}">
+						<h2 th:text="${topic4.name}">Topic 4 Name</h2>
+						<div class="content">
+							<p th:text="${topic3.description}">Topic 3 Description</p>
 						</div>
 					</a>
 				</article>

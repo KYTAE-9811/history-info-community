@@ -1,7 +1,7 @@
 package com.kimyeontae.history_info.posts;
 
 import com.kimyeontae.history_info.comments.Comment;
-import com.kimyeontae.history_info.like.Like;
+import com.kimyeontae.history_info.newLike.PostLike;
 import com.kimyeontae.history_info.topic.Topic;
 import com.kimyeontae.history_info.users.Users;
 import jakarta.persistence.*;
@@ -40,7 +40,7 @@ public class Posts {
     private List<Comment> comments;
 
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Like> likes;
+    private List<PostLike> likes;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

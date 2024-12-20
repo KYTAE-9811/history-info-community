@@ -31,9 +31,9 @@ public class PostResponse {
     public PostResponse creatPostResponse(Posts posts) {
         this.id = posts.getId();
         this.content = posts.getContent();
-        this.dislike = posts.getDislikes();
+//        this.dislike = posts.getDislikes();
         this.imageUrl = posts.getImageUrl();
-        this.like = posts.getLikes();
+//        this.like = posts.getLikes();
         this.view = posts.getViews();
         this.title = posts.getTitle();
         this.createdAt = posts.getCreatedAt();

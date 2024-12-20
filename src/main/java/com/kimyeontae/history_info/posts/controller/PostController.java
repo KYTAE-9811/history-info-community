@@ -2,6 +2,8 @@ package com.kimyeontae.history_info.posts.controller;
 
 import com.kimyeontae.history_info.comments.dto.CommentResponse;
 import com.kimyeontae.history_info.comments.service.CommentService;
+import com.kimyeontae.history_info.like.dto.LikeRequest;
+import com.kimyeontae.history_info.like.service.LikeService;
 import com.kimyeontae.history_info.posts.Posts;
 import com.kimyeontae.history_info.posts.dto.PostRequest;
 import com.kimyeontae.history_info.posts.dto.PostResponse;
@@ -9,6 +11,7 @@ import com.kimyeontae.history_info.posts.service.PostService;
 import com.kimyeontae.history_info.topic.Topic;
 import com.kimyeontae.history_info.topic.TopicService;
 import com.kimyeontae.history_info.users.CustomUserDetail;
+import com.kimyeontae.history_info.users.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,6 +31,20 @@ public class PostController {
     private final PostService postService;
     private final CommentService commentService;
     private final TopicService topicService;
+    private final LikeService likeService;
+    private final UserService userService;
+
+
+    @ModelAttribute("currentUser")
+    public String addLoggedInUser(@AuthenticationPrincipal CustomUserDetail user) {
+        return user != null ? user.getUsername() : null;
+    }
+
+    @ModelAttribute("topic")
+    public Topic addTopic(@PathVariable("topicId") Long topicId) {
+        return topicService.findTopic(topicId);
+    }
+
 
     // 게시글 전체 목록 조회 (완)
     @GetMapping
@@ -61,11 +78,15 @@ public class PostController {
         model.addAttribute("post", postResponse);
         // 게시글 자체 내용을 넘김
 
+        Long likeCount = likeService.getLikeCount(postId, "Post");
+        model.addAttribute("likeCount", likeCount);
+        // 게시글 좋아요 개수를 넘김
+
         List<CommentResponse> comments = commentService.getAllComments(postId);
         model.addAttribute("comments", comments);
         // 포스트 아이디로 가져온 해당 게시글의 댓글들을 모델로 넘김
 
-        return "post-detail";
+        return "postDetail";
     }
 
     // 게시글 등록 페이지
@@ -75,7 +96,8 @@ public class PostController {
         model.addAttribute("topicId", topicId);
         model.addAttribute("post", new PostRequest());
         model.addAttribute("writer", user.getUsername());
-        return "post_new";
+
+        return "postNew";
     }
 
     // 게시글 등록
@@ -94,7 +116,6 @@ public class PostController {
         postResponse.creatPostResponse(post);
 
         // 작성자 정보 Post 엔티티에 저장
-
         postService.addPost(post);
 
         model.addAttribute("topicId", topicId);
@@ -120,6 +141,39 @@ public class PostController {
         return "redirect:/posts/" + postId;
     }
 
+    // 게시글 좋아요
+    @PostMapping("/posts/{postId}/addlike")
+    public String PostAddLike(Model model, @PathVariable("postId") Long postId) {
+
+        model.addAttribute("postId", postId);
+        String currentUsername = (String) model.getAttribute("currentUser");
+        Long currentUserId = userService.findByUsername(currentUsername);
+        Topic topic = (Topic) model.getAttribute("topic");
+
+        LikeRequest likeRequest = new LikeRequest(currentUserId, postId, "POST");
+        likeService.addLike(likeRequest);
+
+        return "redirect:/topic/" + topic.getId() + "/posts/" + postId;
+    }
+
+    // 게시글 좋아요 취소
+    @PostMapping("/{postId}/likes/remove")
+    public String removeLikeFromPost(Model model ,@PathVariable Long postId) {
+
+        model.addAttribute("postId", postId);
+        String currentUsername = (String) model.getAttribute("currentUser");
+        Long currentUserId = userService.findByUsername(currentUsername);
+
+        Topic topic = (Topic) model.getAttribute("topic");
+
+        likeService.removeLike(currentUserId, postId, "POST");
+
+        return "redirect:/topic/"+ topic.getId() + "/posts/" + postId; // 게시글 상세 페이지로 리다이렉트
+    }
+
+
     // 게시글 검색
     // 게시글 검색 후 페이징
+
+
 }

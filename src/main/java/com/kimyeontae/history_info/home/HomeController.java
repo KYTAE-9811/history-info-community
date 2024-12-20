@@ -24,7 +24,10 @@ public class HomeController {
     @GetMapping
     public String home(Model model) {
         List<Topic> topics = topicService.AllTopics();
-        model.addAttribute("topics", topics);
+        model.addAttribute("topic1", topicService.findTopic(1L));
+        model.addAttribute("topic2", topicService.findTopic(2L));
+        model.addAttribute("topic3", topicService.findTopic(3L));
+        model.addAttribute("topic4", topicService.findTopic(4L));
 
         return "home";
     }

@@ -72,15 +72,15 @@ public class PostService {
     6.좋아요, 싫어요, 조회수
      */
 
-    public void addPostLike(Posts posts) {
-        postRepository.findById(posts.getId());
-        posts.addLikes();
-    }
-
-    public void addPostDisLike(Posts posts) {
-        postRepository.findById(posts.getId());
-        posts.addDislikes();
-    }
+//    public void addPostLike(Posts posts) {
+//        postRepository.findById(posts.getId());
+//        posts.addLikes();
+//    }
+//
+//    public void addPostDisLike(Posts posts) {
+//        postRepository.findById(posts.getId());
+//        posts.addDislikes();
+//    }
 
     public void addViews(Posts posts) {
         postRepository.findById(posts.getId());

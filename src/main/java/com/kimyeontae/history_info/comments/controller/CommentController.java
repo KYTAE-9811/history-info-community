@@ -21,4 +21,6 @@ public class CommentController {
 
         return "redirect:/topic/{topicId}/posts/" + postId;
     }
+
+
 }

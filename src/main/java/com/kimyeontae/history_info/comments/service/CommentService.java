@@ -77,15 +77,15 @@ public class CommentService {
     /*
     6.좋아요, 싫어요, 조회수
      */
-
-    public void addCommentLike(Posts posts) {
-        commentRepository.findById(posts.getId());
-        posts.addLikes();
-    }
-
-    public void addCommentDisLike(Posts posts) {
-        commentRepository.findById(posts.getId());
-        posts.addDislikes();
-    }
+//
+//    public void addCommentLike(Posts posts) {
+//        commentRepository.findById(posts.getId());
+//        posts.addLikes();
+//    }
+//
+//    public void addCommentDisLike(Posts posts) {
+//        commentRepository.findById(posts.getId());
+//        posts.addDislikes();
+//    }
 
 }
